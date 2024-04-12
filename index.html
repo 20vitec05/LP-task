@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <style>
+        /* Стили для калькулятора */
+        .calculator {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        #display {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 10px;
+            font-size: 20px;
+            text-align: right;
+            padding: 5px;
+        }
+        button {
+            width: 70px;
+            height: 40px;
+            margin: 5px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <!-- Дисплей калькулятора -->
+        <div id="display">0</div>
+        <!-- Кнопки кальлятора -->
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('+')">+</button>
+        <br>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('-')">-</button>
+        <br>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('*')">*</button>
+        <br>
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay('.')">.</button>
+        <button onclick="calculateResult()">=</button>
+        <button onclick="appendToDisplay('/')">/</button>
+        <br>
+        <button onclick="clearDisplay()">C</button>
+    </div>
+
+    <!-- JavaScript код для калькулятора -->
+    <script>
+        let display = document.getElementById('display');
+        
+        function appendToDisplay(value) {
+            if (display.textContent === '0' && value !== '.') {
+                display.textContent = '';
+            }
+            display.textContent += value;
+        }
+        
+        function clearDisplay() {
+            display.textContent = '0';
+        }
+        
+        function calculateResult() {
+            let result;
+            try {
+                result = eval(display.textContent);
+                display.textContent = result;
+            } catch (error) {
+                display.textContent = 'Ошибка';
+            }
+        }
+
+        // Обработчик события для ввода с клавиатуры
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            if (key >= '0' && key <= '9') {
+                appendToDisplay(key);
+            } else if (key === '.') {
+                appendToDisplay('.');
+            } else if (key === '+' || key === '-' || key === '*' || key === '/' || key === '(' || key === ')' || key === ' ') {
+                appendToDisplay(key);
+            } else if (key === 'Enter' || key === '=') {
+                calculateResult();
+            } else if (key === 'C' || key === 'c') {
+                clearDisplay();
+            }
+        });
+    </script>
+</body>
+</html>
