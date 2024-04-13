@@ -9,7 +9,7 @@ function appendToDisplay(value) {
     else {
         if(display.textContent.slice(-1) >= '0' && display.textContent.slice(-1) <= '9'){}
         else {
-            return 0
+            display.textContent = display.textContent.slice(0,-1)
         }
     }
     if (display.textContent === '0' && value !== '.') {
