@@ -4,32 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор</title>
-    <style>
-        .calculator {
-            width: 350px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        #display {
-            width: 100%;
-            height: 40px;
-            border: 1px solid #707070;
-            border-radius: 3px;
-            margin-bottom: 10px;
-            font-size: 20px;
-            text-align: right;
-            padding: 5px;
-        }
-        button {
-            width: 70px;
-            height: 40px;
-            margin: 5px;
-            font-size: 18px;
-        }
-    </style>
+    <link href='styles.css' rel='stylesheet'>
+    <script src='script.js'></script>
 </head>
 <body>
     <div class="calculator">
@@ -60,91 +36,5 @@
         <button onclick="calculateResult()">=</button>
         <button onclick="appendToDisplay('/')">/</button>
     </div>
-
-    <script>
-        let display = document.getElementById('display');
-        let lastPressedEquals = false;
-
-        function appendToDisplay(value) {
-            if(value >= '0' && value <= '9') {
-                if(lastPressedEquals == true) {
-                    clearDisplay();
-                }
-            }
-            else {
-                if(display.textContent.slice(-1) >= '0' && display.textContent.slice(-1) <= '9'){}
-                else {
-                    return 0
-                }
-            }
-            if (display.textContent === '0' && value !== '.') {
-                display.textContent = '';
-            }
-            lastPressedEquals = false;
-            display.textContent += value;
-        }
-        
-        function clearDisplay() {
-            display.textContent = '0';
-        }
-        
-        function deleteLastCharacter() {
-            lastPressedEquals = false;
-            let currentValue = display.textContent;
-            display.textContent = currentValue.slice(0, -1);
-            if (display.textContent === '') {
-                display.textContent = '0';
-            }
-        }
-        function calculateResult() {
-            lastPressedEquals = true;
-            let result;
-            try {
-                result = eval(display.textContent);
-                display.textContent = result;
-            } catch (error) {
-                display.textContent = 'Ошибка';
-            }
-        }
-
-        function calculateSquareRoot() {
-            calculateResult();
-            let currentValue = parseFloat(display.textContent);
-            if (currentValue >= 0) {
-                display.textContent = Math.sqrt(currentValue);
-            } else {
-                display.textContent = 'Ошибка';
-            }
-        }
-
-        function changeSign() {
-            calculateResult();
-            let currentValue = display.textContent;
-            if (currentValue !== '0') {
-                if (currentValue.charAt(0) === '-') {
-                    display.textContent = currentValue.slice(1);
-                } else {
-                    display.textContent = '-' + currentValue;
-                }
-    }
-        }
-
-        document.addEventListener('keydown', function(event) {
-            const key = event.key;
-            if (key >= '0' && key <= '9') {
-                appendToDisplay(key);
-            } else if (key === '.') {
-                appendToDisplay('.');
-            } else if (key === '+' || key === '-' || key === '*' || key === '/' || key === '(' || key === ')' || key === ' ') {
-                appendToDisplay(key);
-            } else if (key === 'Enter' || key === '=') {
-                calculateResult();
-            } else if (key === 'C' || key === 'c') {
-                clearDisplay();
-            } else if (key === 'Backspace') {
-                deleteLastCharacter();
-            }
-        });
-    </script>
 </body>
 </html>
